@@ -44,6 +44,12 @@ button { font: inherit; }
   padding: 8px 2px 18px;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .eyebrow {
   color: #9a9da6;
   font-size: 0.68rem;
@@ -62,6 +68,7 @@ h1 {
 }
 
 .sound-button,
+.help-button,
 .controls button,
 #startButton {
   min-height: 48px;
@@ -73,9 +80,15 @@ h1 {
   touch-action: manipulation;
 }
 
-.sound-button {
+.sound-button,
+.help-button {
   padding: 0 18px;
   white-space: nowrap;
+}
+
+.help-button {
+  border-color: rgba(201, 255, 60, .35);
+  color: var(--lime);
 }
 
 .stage-card {
@@ -109,7 +122,9 @@ canvas {
 
 .overlay-panel {
   width: min(490px, 100%);
+  max-height: calc(100% - 10px);
   padding: clamp(24px, 5vw, 48px);
+  overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(10, 12, 17, 0.9);
   border-radius: 22px;
@@ -136,6 +151,28 @@ canvas {
   font-size: 0.92rem;
   line-height: 1.55;
 }
+
+.overlay-text {
+  margin: 14px 0 22px;
+  color: #afb3bd;
+  text-align: left;
+}
+
+.overlay-text p {
+  margin: 0 0 12px;
+  color: #d8dae0;
+}
+
+.overlay-text ul {
+  display: grid;
+  margin: 0;
+  padding-left: 18px;
+  gap: 7px;
+  font-size: .78rem;
+  line-height: 1.45;
+}
+
+.overlay-text strong { color: #fff; }
 
 #startButton {
   width: 100%;
@@ -213,7 +250,8 @@ canvas {
 @media (max-width: 600px) {
   .game-shell { width: min(100% - 18px, 1240px); }
   .game-header { align-items: center; padding-bottom: 12px; }
-  .sound-button { min-height: 42px; padding: 0 13px; font-size: 0.76rem; }
+  .sound-button,
+  .help-button { min-height: 42px; padding: 0 13px; font-size: 0.76rem; }
   .stage-card { border-radius: 16px; }
   canvas {
     min-height: min(54svh, 430px);
@@ -225,8 +263,9 @@ canvas {
 @media (max-height: 560px) and (orientation: landscape) {
   .game-shell { width: min(100% - 18px, 1240px); padding: 8px 0; }
   .game-header { position: absolute; z-index: 3; top: 12px; left: 24px; right: 24px; pointer-events: none; }
-  .game-header .eyebrow, .sound-button { display: none; }
-  h1 { color: rgba(255,255,255,.55); font-size: 1rem; }
+  .game-header > div:first-child, .sound-button { display: none; }
+  .game-header { justify-content: flex-end; }
+  .help-button { min-height: 40px; pointer-events: auto; background: rgba(15, 17, 23, .82); }
   canvas { height: calc(100svh - 18px); aspect-ratio: auto; }
   .controls {
     position: absolute;

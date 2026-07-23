@@ -5,6 +5,9 @@ const overlayTitle = document.querySelector("#overlayTitle");
 const overlayText = document.querySelector("#overlayText");
 const startButton = document.querySelector("#startButton");
 const soundButton = document.querySelector("#soundButton");
+const helpButton = document.querySelector("#helpButton");
+const helpMarkup = overlayText.innerHTML;
+const helpTitle = overlayTitle.textContent;
 
 const ASSET = "monster_wrangler_assets/";
 const sprites = {
@@ -28,6 +31,8 @@ const keys = new Set();
 let soundEnabled = true;
 let running = false;
 let gameOver = false;
+let hasStarted = false;
+let overlayMode = "start";
 let lastTime = 0;
 let width = 1200;
 let height = 700;
@@ -139,6 +144,8 @@ function resetGame() {
 function startGame() {
   overlay.classList.remove("is-visible");
   running = true;
+  hasStarted = true;
+  overlayMode = "resume";
   if (gameOver || round === 0) resetGame();
   lastTime = performance.now();
   requestAnimationFrame(loop);
@@ -147,10 +154,34 @@ function startGame() {
 function showGameOver() {
   running = false;
   gameOver = true;
+  hasStarted = false;
+  overlayMode = "restart";
   overlayTitle.textContent = `Final skor: ${score.toLocaleString("tr-TR")}`;
   overlayText.textContent = `Toplam ${round} tura ulaştın. Yeni bir seri için tekrar başlayabilirsin.`;
   startButton.textContent = "Tekrar oyna";
   overlay.classList.add("is-visible");
+}
+
+function showHelp() {
+  const canResume = hasStarted && !gameOver;
+  running = false;
+  keys.clear();
+  overlayMode = canResume ? "resume" : "start";
+  overlayTitle.textContent = helpTitle;
+  overlayText.innerHTML = helpMarkup;
+  startButton.textContent = canResume ? "Oyuna dön" : "Oyuna başla";
+  overlay.classList.add("is-visible");
+}
+
+function handleOverlayAction() {
+  if (overlayMode === "resume") {
+    overlay.classList.remove("is-visible");
+    running = true;
+    lastTime = performance.now();
+    requestAnimationFrame(loop);
+    return;
+  }
+  startGame();
 }
 
 function warp() {
@@ -321,7 +352,8 @@ document.querySelectorAll("[data-key]").forEach((button) => {
   button.addEventListener("lostpointercapture", release);
 });
 
-startButton.addEventListener("click", startGame);
+startButton.addEventListener("click", handleOverlayAction);
+helpButton.addEventListener("click", showHelp);
 soundButton.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
   soundButton.textContent = soundEnabled ? "Ses açık" : "Ses kapalı";
