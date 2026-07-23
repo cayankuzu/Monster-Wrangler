@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#07090d" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='.9em' font-size='90'>👾</text></svg>" />
+    <title>Monster Wrangler</title>
+    <meta
+      name="description"
+      content="Doğru canavarı yakala, yanlış renkten kaç ve turları tamamla."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="game-header">
+        <div>
+          <span class="eyebrow">MeMoDe Web Game</span>
+          <h1>Monster Wrangler</h1>
+        </div>
+        <button class="sound-button" id="soundButton" type="button" aria-pressed="true">
+          Ses açık
+        </button>
+      </header>
+
+      <section class="stage-card" aria-label="Monster Wrangler oyun alanı">
+        <canvas id="gameCanvas" width="1200" height="700">
+          Tarayıcınız canvas özelliğini desteklemiyor.
+        </canvas>
+        <div class="game-overlay is-visible" id="gameOverlay">
+          <div class="overlay-panel">
+            <span class="overlay-kicker">Hedefi bul</span>
+            <h2 id="overlayTitle">Canavarları yakalamaya hazır mısın?</h2>
+            <p id="overlayText">
+              Üstte gösterilen renkteki canavarı yakala. Yanlış renk bir can götürür.
+            </p>
+            <button id="startButton" type="button">Oyuna başla</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Dokunmatik oyun kontrolleri">
+        <div class="dpad" aria-label="Hareket tuşları">
+          <button class="up" data-key="ArrowUp" type="button" aria-label="Yukarı">↑</button>
+          <button class="left" data-key="ArrowLeft" type="button" aria-label="Sol">←</button>
+          <button class="down" data-key="ArrowDown" type="button" aria-label="Aşağı">↓</button>
+          <button class="right" data-key="ArrowRight" type="button" aria-label="Sağ">→</button>
+        </div>
+        <button class="action-button" data-key="Space" type="button">
+          <strong>Işınlan</strong>
+          <span>güvenli alana dön</span>
+        </button>
+      </section>
+
+      <footer class="game-footer">
+        <p><strong>Hareket:</strong> Ok tuşları / WASD</p>
+        <p><strong>Işınlan:</strong> Boşluk</p>
+      </footer>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>
